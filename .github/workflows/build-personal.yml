@@ -1,0 +1,17 @@
+name: Build personal
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [fix/unrestricted-downloads-2.15.1]
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      configuration: Release
+      architecture: x64
+    secrets: inherit
