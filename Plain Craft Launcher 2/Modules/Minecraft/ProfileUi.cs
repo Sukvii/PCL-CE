@@ -179,14 +179,7 @@ public static class ProfileUi
         return uuid;
     }
 
-    public static bool CanCreateOtherProfile()
-    {
-#if DEBUG || DEBUGCI
-        return true;
-#else
-        return ProfileService.HasMicrosoftProfile || (Lang.IsFeaturesUnrestricted && ProfileService.Profiles.Count > 0) || NetworkHelper.IsNetworkAvailable() is false;
-#endif
-    }
+    public static bool CanCreateOtherProfile() => true;
 
     public static void CreateProfile()
     {
