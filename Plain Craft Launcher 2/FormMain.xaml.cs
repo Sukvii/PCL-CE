@@ -158,7 +158,6 @@ public partial class FormMain
         PageSetupUI.BackgroundRefresh(false, true);
         ModMusic.MusicRefreshPlay(false, true);
         // 扩展按钮
-        BtnExtraUpdateRestart.showCheck = BtnExtraUpdateRestart_ShowCheck;
         BtnExtraDownload.showCheck = BtnExtraDownload_ShowCheck;
         BtnExtraBack.showCheck = BtnExtraBack_ShowCheck;
         BtnExtraApril.showCheck = BtnExtraApril_ShowCheck;
@@ -578,14 +577,11 @@ public partial class FormMain
         // Await LobbyController.CloseAsync().ConfigureAwait(False)
         ModBase.isProgramEnded = true;
         ModAnimation.AniControlEnabled += 1;
-        if (UpdateManager.isUpdateWaitingRestart && !isUpdating)
-            UpdateManager.UpdateRestart(false, false);
         if (returnCode == ModBase.ProcessReturnValues.Exception)
         {
             if (!isLogShown)
             {
                 ModBase.FeedbackInfo();
-                ModBase.Log("请在 https://github.com/PCL-Community/PCL2-CE/issues 提交错误报告，以便于社区解决此问题！（这也有可能是原版 PCL 的问题）");
                 isLogShown = true;
                 ModBase.ShellOnly(LogWrapper.CurrentLogger.CurrentLogFiles.Last());
             }
@@ -1445,9 +1441,7 @@ public partial class FormMain
         SetupLink = 3,
         SetupAbout = 4,
         SetupLog = 5,
-        SetupFeedback = 6,
         SetupGameLink = 7,
-        SetupUpdate = 8,
         SetupJava = 9,
         SetupLauncherMisc = 10,
         SetupLauncherLanguage = 11,
@@ -2132,17 +2126,6 @@ public partial class FormMain
     #endregion
 
     #region 附加按钮
-
-    // 更新重启
-    private void BtnExtraUpdateRestart_Click(object sender, MouseButtonEventArgs e)
-    {
-        UpdateManager.UpdateRestart(true);
-    }
-
-    private bool BtnExtraUpdateRestart_ShowCheck()
-    {
-        return UpdateManager.isUpdateWaitingRestart;
-    }
 
     // 音乐
     private void BtnExtraMusic_Click(object sender, MouseButtonEventArgs e)

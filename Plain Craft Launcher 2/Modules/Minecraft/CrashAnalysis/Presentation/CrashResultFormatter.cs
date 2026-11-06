@@ -52,10 +52,6 @@ internal sealed class CrashResultFormatter
         if (specs.Any(spec => spec.AppendHelpHint))
             followUps.Add(Lang.Text("Crash.Suggestion.ExportReport"));
 
-        var launcherOutdatedSuggestion = _GetLauncherOutdatedSuggestion();
-        if (!string.IsNullOrWhiteSpace(launcherOutdatedSuggestion))
-            followUps.Add(launcherOutdatedSuggestion);
-
         return followUps.Count == 0
             ? text
             : Lang.Text(
@@ -508,18 +504,4 @@ internal sealed class CrashResultFormatter
             .Replace("\r", "\r\n");
     }
 
-    private static string? _GetLauncherOutdatedSuggestion()
-    {
-        try
-        {
-            return UpdateManager.GetVersionStatus() == UpdateEnums.VersionStatus.Latest
-                ? null
-                : Lang.Text("Crash.Suggestion.LauncherOutdated");
-        }
-        catch (Exception ex)
-        {
-            LogWrapper.Error(ex, "Crash", "确认启动器更新失败");
-            return null;
-        }
-    }
 }

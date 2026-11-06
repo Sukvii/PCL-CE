@@ -114,7 +114,6 @@ public sealed partial class StartupService
     private static void _ParseCommandLineArgs()
     {
         IEnumerable<SubcommandDefinition> subcommands = [
-            ("update", [("execute"), ("success"), ("failed")]),
             ("activate", []),
             ("promote", []),
         ];

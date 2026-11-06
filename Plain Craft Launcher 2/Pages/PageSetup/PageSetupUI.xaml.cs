@@ -128,10 +128,8 @@ public partial class PageSetupUI
             CheckHiddenSetupGameManage.Checked = uiHidden.SetupGameManage;
             CheckHiddenSetupJava.Checked = uiHidden.SetupJava;
             CheckHiddenLauncherMisc.Checked = uiHidden.SetupLauncherMisc;
-            CheckHiddenSetupUpdate.Checked = uiHidden.SetupUpdate;
             CheckHiddenSetupGameLink.Checked = uiHidden.SetupGameLink;
             CheckHiddenSetupAbout.Checked = uiHidden.SetupAbout;
-            CheckHiddenSetupFeedback.Checked = uiHidden.SetupFeedback;
             CheckHiddenSetupLog.Checked = uiHidden.SetupLog;
 
             // 子页面 工具
@@ -772,16 +770,11 @@ public partial class PageSetupUI
                     : Visibility.Visible;
                 ModMain.frmSetupLeft.ItemJava.Visibility =
                     !HiddenForceShow && conf.SetupJava ? Visibility.Collapsed : Visibility.Visible;
-                ModMain.frmSetupLeft.ItemUpdate.Visibility =
-                    !HiddenForceShow && conf.SetupUpdate ? Visibility.Collapsed : Visibility.Visible;
                 ModMain.frmSetupLeft.ItemGameLink.Visibility = !HiddenForceShow && conf.SetupGameLink
                     ? Visibility.Collapsed
                     : Visibility.Visible;
                 ModMain.frmSetupLeft.ItemAbout.Visibility =
                     !HiddenForceShow && conf.SetupAbout ? Visibility.Collapsed : Visibility.Visible;
-                ModMain.frmSetupLeft.ItemFeedback.Visibility = !HiddenForceShow && conf.SetupFeedback
-                    ? Visibility.Collapsed
-                    : Visibility.Visible;
                 ModMain.frmSetupLeft.ItemLog.Visibility =
                     !HiddenForceShow && conf.SetupLog ? Visibility.Collapsed : Visibility.Visible;
 
@@ -792,7 +785,7 @@ public partial class PageSetupUI
                     (ModMain.frmSetupLeft.TextToolsCategory, !conf.SetupGameLink),
                     (ModMain.frmSetupLeft.TextLauncherCategory, !(conf.SetupUi && conf.SetupLauncherLanguage && conf.SetupLauncherMisc)),
                     (ModMain.frmSetupLeft.TextAboutCategory,
-                        !(conf.SetupAbout && conf.SetupUpdate && conf.SetupFeedback && conf.SetupLog))
+                        !(conf.SetupAbout && conf.SetupLog))
                 };
 
                 foreach (var category in categories)
@@ -817,13 +810,9 @@ public partial class PageSetupUI
                     setupCount += 1;
                 if (!conf.SetupJava)
                     setupCount += 1;
-                if (!conf.SetupUpdate)
-                    setupCount += 1;
                 if (!conf.SetupGameLink)
                     setupCount += 1;
                 if (!conf.SetupAbout)
-                    setupCount += 1;
-                if (!conf.SetupFeedback)
                     setupCount += 1;
                 if (!conf.SetupLog)
                     setupCount += 1;
@@ -889,10 +878,8 @@ public partial class PageSetupUI
         CheckHiddenSetupGameManage.Checked = isChecked;
         CheckHiddenLauncherMisc.Checked = isChecked;
         CheckHiddenSetupJava.Checked = isChecked;
-        CheckHiddenSetupUpdate.Checked = isChecked;
         CheckHiddenSetupGameLink.Checked = isChecked;
         CheckHiddenSetupAbout.Checked = isChecked;
-        CheckHiddenSetupFeedback.Checked = isChecked;
         CheckHiddenSetupLog.Checked = isChecked;
     }
 
@@ -908,10 +895,8 @@ public partial class PageSetupUI
         CheckHiddenSetupGameManage.Checked = isChecked;
         CheckHiddenLauncherMisc.Checked = isChecked;
         CheckHiddenSetupJava.Checked = isChecked;
-        CheckHiddenSetupUpdate.Checked = isChecked;
         CheckHiddenSetupGameLink.Checked = isChecked;
         CheckHiddenSetupAbout.Checked = isChecked;
-        CheckHiddenSetupFeedback.Checked = isChecked;
         CheckHiddenSetupLog.Checked = isChecked;
     }
 
@@ -922,7 +907,7 @@ public partial class PageSetupUI
         var conf = Config.Preference.Hide;
         // 判断是否全部勾选
         var allChecked = conf.SetupLaunch && conf.SetupUi && conf.SetupLauncherLanguage && conf.SetupJava &&
-                         conf.SetupUpdate && conf.SetupGameLink && conf.SetupAbout && conf.SetupFeedback &&
+                         conf.SetupGameLink && conf.SetupAbout &&
                          conf.SetupLog && conf.SetupLauncherMisc && conf.SetupGameManage;
         CheckHiddenPageSetup.Checked = allChecked;
     }

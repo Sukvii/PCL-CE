@@ -59,11 +59,9 @@ public static class ModMain
     public static PageSetupLaunch? frmSetupLaunch;
     public static PageSetupUI? frmSetupUI;
     public static PageSetupGameManage? frmSetupGameManage;
-    public static PageSetupUpdate? frmSetupUpdate;
     public static PageSetupJava? frmSetupJava;
     public static PageSetupAbout? frmSetupAbout;
     public static PageSetupLog? frmSetupLog;
-    public static PageSetupFeedback? frmSetupFeedback;
     public static PageSetupGameLink? frmSetupGameLink;
     public static PageSetupLauncherLanguage? frmSetupLauncherLanguage;
     public static PageSetupLauncherMisc? frmSetupLauncherMisc;

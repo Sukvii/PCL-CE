@@ -3500,31 +3500,10 @@ public static class ModBase
         if (isCritical)
             isCriticalErrorTriggered = true;
 
-        if (CanFeedback(false))
-        {
-            var message = Lang.Text("Setup.Feedback.ErrorPrompt.Submit.Message", userMessage);
-            var shouldSend = isCritical
-                ? Interaction.MsgBox(
-                    message,
-                    (MsgBoxStyle)((int)MsgBoxStyle.Critical + (int)MsgBoxStyle.YesNo),
-                    title) == MsgBoxResult.Yes
-                : ModMain.MyMsgBox(
-                    message,
-                    title,
-                    Lang.Text("Setup.Feedback.ErrorPrompt.Submit.Action"),
-                    Lang.Text("Common.Action.Cancel"),
-                    isWarn: true) == 1;
-
-            if (shouldSend)
-                Feedback(false, true);
-            return;
-        }
-
-        var updateMessage = Lang.Text("Setup.Feedback.ErrorPrompt.Update.Message", userMessage);
         if (isCritical)
-            Interaction.MsgBox(updateMessage, MsgBoxStyle.Critical, title);
+            Interaction.MsgBox(userMessage, MsgBoxStyle.Critical, title);
         else
-            ModMain.MyMsgBox(updateMessage, title, isWarn: true);
+            ModMain.MyMsgBox(userMessage, title, isWarn: true);
     }
 
     public static string Base64Decode(string text)
@@ -3544,44 +3523,6 @@ public static class ModBase
     public static string Base64Encode(byte[] bytes)
     {
         return Convert.ToBase64String(bytes);
-    }
-
-    // 反馈
-    public static void Feedback(bool showMsgbox = true, bool forceOpenLog = false)
-    {
-        // On Error Resume Next
-        FeedbackInfo();
-        var currentDate = DateTime.Now.ToString("yyyy-M-dd", CultureInfo.InvariantCulture);
-
-        if (forceOpenLog || (showMsgbox &&
-                             ModMain.MyMsgBox(
-                                 Lang.Text("Setup.Feedback.Reminder.Message", currentDate),
-                                 Lang.Text("Setup.Feedback.Reminder.Title"),
-                                 Lang.Text("Common.Action.OpenFolder"),
-                                 Lang.Text("Setup.Feedback.Reminder.NotNeeded")) ==
-                             1)) OpenExplorer(exePath + @"PCL\Log\");
-        OpenWebsite("https://github.com/PCL-Community/PCL2-CE/issues/");
-    }
-
-    public static bool CanFeedback(bool showHint)
-    {
-        var stat = UpdateManager.GetVersionStatus();
-        if (stat == UpdateEnums.VersionStatus.Latest) return true;
-
-        if (!showHint) return false;
-
-        if (ModMain.MyMsgBox(
-                stat == UpdateEnums.VersionStatus.NotLatest
-                    ? Lang.Text("Setup.Feedback.Unavailable.NotLatest.Message")
-                    : Lang.Text("Setup.Feedback.Unavailable.CheckFailed.Message"),
-                Lang.Text("Setup.Feedback.Unavailable.Title"),
-                stat == UpdateEnums.VersionStatus.NotLatest
-                    ? Lang.Text("Setup.Feedback.Unavailable.NotLatest.Action")
-                    : Lang.Text("Setup.Feedback.Unavailable.CheckFailed.Action"),
-                Lang.Text("Common.Action.Cancel")) == 1)
-            ModMain.frmMain.PageChange(FormMain.PageType.Setup, FormMain.PageSubType.SetupUpdate);
-
-        return false;
     }
 
     /// <summary>

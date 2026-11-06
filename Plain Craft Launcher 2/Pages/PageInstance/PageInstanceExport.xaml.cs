@@ -866,25 +866,6 @@ public partial class PageInstanceExport : IRefreshable
         // 构造步骤加载器
         var loaders = new List<ModLoader.LoaderBase>();
 
-        #region 准备 PCL 文件
-        
-        #if !RELEASE
-        if (includePCL)
-            loaders.Add(new ModLoader.LoaderTask<int, int>(Lang.Text("Instance.Export.Task.DownloadPclRelease"),
-                loader =>
-                {
-                    UpdateManager.DownloadLatestPCL(loader);
-                    ModBase.CopyFile(Path.Combine(ModBase.pathTemp, "CE-Latest.exe"),
-                        Path.Combine(cacheFolder, "Plain Craft Launcher.exe"));
-                })
-            {
-                ProgressWeight = 0.5d,
-                block = false
-            });
-        #endif
-
-        #endregion
-
         #region 复制文件
 
         loaders.Add(new ModLoader.LoaderTask<int, List<ModLocalComp.LocalCompFile>>(
@@ -971,10 +952,8 @@ public partial class PageInstanceExport : IRefreshable
             loader.Progress = 0.97d;
             // 复制 PCL 实例设置
             ModBase.CopyDirectory(Path.Combine(mcInstance.PathInstance, "PCL"), Path.Combine(overridesFolder, "PCL"));
-            #if RELEASE
-                        // 复制 PCL 本体
-                        if (includePCL) ModBase.CopyFile(Basics.ExecutablePath, Path.Combine(cacheFolder, Basics.ExecutableName));
-            #endif
+            // 复制当前个人版启动器
+            if (includePCL) ModBase.CopyFile(Basics.ExecutablePath, Path.Combine(cacheFolder, Basics.ExecutableName));
             // 复制 PCL 个性化内容
             if (includePCLCustom)
             {

@@ -24,8 +24,6 @@ public partial class PageSetupLeft
         if (ItemLauncherLanguage.Checked && hide.SetupLauncherLanguage) isHiddenPage = true;
         if (ItemLauncherMisc.Checked && hide.SetupLauncherMisc) isHiddenPage = true;
         if (ItemAbout.Checked && hide.SetupAbout) isHiddenPage = true;
-        if (ItemUpdate.Checked && hide.SetupUpdate) isHiddenPage = true;
-        if (ItemFeedback.Checked && hide.SetupFeedback) isHiddenPage = true;
         if (ItemLog.Checked && hide.SetupLog) isHiddenPage = true;
         if (PageSetupUI.HiddenForceShow)
             isHiddenPage = false;
@@ -55,10 +53,6 @@ public partial class PageSetupLeft
             ItemLauncherMisc.SetChecked(true, false, false);
         else if (!hideCfg.SetupAbout) 
             ItemAbout.SetChecked(true, false, false);   
-        else if (!hideCfg.SetupUpdate) 
-            ItemUpdate.SetChecked(true, false, false);
-        else if (!hideCfg.SetupFeedback) 
-            ItemFeedback.SetChecked(true, false, false);
         else if (!hideCfg.SetupLog) 
             ItemLog.SetChecked(true, false, false);
         else 
@@ -150,39 +144,10 @@ public partial class PageSetupLeft
         }
     }
 
-    public static void TryFeedback() // Handles ItemFeedback.Click
-    {
-        ModBase.RunInNewThread(() =>
-        {
-            if (!ModBase.CanFeedback(true))
-                return;
-            switch (ModMain.MyMsgBox(Lang.Text("Setup.Left.Feedback.Message"), Lang.Text("Setup.Left.Feedback.Title"),
-                        Lang.Text("Setup.Left.Feedback.SubmitNew"), Lang.Text("Setup.Left.Feedback.ViewList"), Lang.Text("Common.Action.Cancel")))
-            {
-                case 1:
-                {
-                    ModBase.Feedback();
-                    break;
-                }
-                case 2:
-                {
-                    ModBase.OpenWebsite("https://github.com/PCL-Community/PCL2-CE/issues/");
-                    break;
-                }
-            }
-        });
-    }
-
     public void Refresh(object sender, EventArgs e) // 由边栏按钮匿名调用
     {
         switch (ModBase.Val(((MyIconButton)sender).Tag))
         {
-            case (double)FormMain.PageSubType.SetupFeedback:
-            {
-                if (ModMain.frmSetupFeedback is not null) ModMain.frmSetupFeedback.Loader.Start(isForceRestart: true);
-                ItemFeedback.Checked = true;
-                break;
-            }
             case (double)FormMain.PageSubType.SetupJava:
             {
                 if (ModMain.frmSetupJava is not null) ModMain.frmSetupJava.loader.Start(isForceRestart: true);
@@ -222,10 +187,6 @@ public partial class PageSetupLeft
             pageID = FormMain.PageSubType.SetupLauncherMisc;
         else if (!hideCfg.SetupAbout)
             pageID = FormMain.PageSubType.SetupAbout;        
-        else if (!hideCfg.SetupUpdate)
-            pageID = FormMain.PageSubType.SetupUpdate;
-        else if (!hideCfg.SetupFeedback)
-            pageID = FormMain.PageSubType.SetupFeedback;
         else if (!hideCfg.SetupLog)
             pageID = FormMain.PageSubType.SetupLog;
         else
@@ -273,12 +234,6 @@ public partial class PageSetupLeft
                     ModMain.frmSetupGameManage = new PageSetupGameManage();
                 return ModMain.frmSetupGameManage;
             }
-            case FormMain.PageSubType.SetupUpdate:
-            {
-                if (ModMain.frmSetupUpdate is null)
-                    ModMain.frmSetupUpdate = new PageSetupUpdate();
-                return ModMain.frmSetupUpdate;
-            }
             case FormMain.PageSubType.SetupAbout:
             {
                 if (ModMain.frmSetupAbout is null)
@@ -290,12 +245,6 @@ public partial class PageSetupLeft
                 if (ModMain.frmSetupLog is null)
                     ModMain.frmSetupLog = new PageSetupLog();
                 return ModMain.frmSetupLog;
-            }
-            case FormMain.PageSubType.SetupFeedback:
-            {
-                if (ModMain.frmSetupFeedback is null)
-                    ModMain.frmSetupFeedback = new PageSetupFeedback();
-                return ModMain.frmSetupFeedback;
             }
             case FormMain.PageSubType.SetupGameLink:
             {
